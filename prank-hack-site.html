@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacker Simulator</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff00;
+      font-family: monospace;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+    }
+    .console {
+      font-size: 1.2rem;
+      border: 2px solid #00ff00;
+      padding: 20px;
+      height: 300px;
+      width: 600px;
+      overflow-y: hidden;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      animation: flicker 0.1s infinite alternate;
+    }
+    .reveal {
+      display: none;
+      color: #ff0000;
+      font-size: 1.8rem;
+      margin-top: 20px;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="console" id="console"></div>
+    <div class="reveal" id="reveal">Pranked! Your system is totally safe 😅</div>
+  </div>
+
+  <script>
+    const consoleElement = document.getElementById('console');
+    const revealElement = document.getElementById('reveal');
+
+    const fakeCommands = [
+      'Initializing ultra-secure system...\n',
+      'Scanning all connected devices...\n',
+      'Decrypting password vault...\n',
+      'Hacking mainframe...\n',
+      'Uploading virus payload...\n',
+      'Overloading CPU cores...\n',
+      'Forcing shutdown...\n',
+      'ERROR! System corrupted.\n'
+    ];
+
+    let commandIndex = 0;
+    function randomTypingEffect(text, delay, callback) {
+      let i = 0;
+      const interval = setInterval(() => {
+        consoleElement.textContent += text.charAt(i);
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+          callback();
+        }
+      }, delay);
+    }
+
+    function displayCommand() {
+      if (commandIndex < fakeCommands.length) {
+        randomTypingEffect(fakeCommands[commandIndex], 50, () => {
+          commandIndex++;
+          setTimeout(displayCommand, 500); // Shorter delay for intensity
+        });
+      } else {
+        setTimeout(() => {
+          revealElement.style.display = 'block';
+        }, 1000); // Delay before showing the reveal
+      }
+    }
+
+    displayCommand();
+  </script>
+</body>
+</html>
